@@ -1,0 +1,47 @@
+{
+  "skill_name": "public-speaking-coach",
+  "evals": [
+    {
+      "id": 0,
+      "name": "farewell-toast",
+      "prompt": "I'm giving a 90-second toast tonight at a colleague's goodbye happy hour. She's a fellow summer analyst on my desk, we've worked closely together for 10 weeks on the same project, she's genuinely one of the most fun and sharp people on the floor, and she's heading back to campus for recruiting next year at a different bank (not GS). About 15 of us will be there, casual bar setting. Keep it warm but not sappy, and give me something I can actually say from memory.",
+      "expected_output": "A short (~90 second spoken length) toast draft, occasion-appropriate (toast playbook: brief, clever/warm, not sappy), audience-aware (peers, casual bar setting), annotated with delivery notes.",
+      "files": [],
+      "assertions": [
+        "Uses the skill's bracket annotation convention (at least 4 distinct tags: HOOK/MAIN POINT/STORY/PAUSE/etc.)",
+        "Includes an explicit 'Effect Notes' section explaining delivery intent",
+        "States audience/occasion assumptions up front before the draft",
+        "Uses a capsule close that calls back to the opener (tagged CALLBACK)",
+        "Draft length is plausible for a 90-second toast (roughly 120-320 words of spoken content)"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "md-project-update",
+      "prompt": "I need to give a 3-minute verbal update to my group's MD and two VPs on Friday about the project I've been working on this summer \u2014 I built a dashboard that automates part of our daily reconciliation process, cut manual checking time from about 2 hours to 20 minutes. This is basically my shot to make an impression before return offer decisions. Help me write what to say.",
+      "expected_output": "A 3-minute business update/pitch draft using persuasive/business structure (thesis, problem-solution or motivational sequence, logos-heavy given the audience of MD/VPs), annotated, aware of the high-stakes audience and return-offer context.",
+      "files": [],
+      "assertions": [
+        "Uses the skill's bracket annotation convention (at least 4 distinct tags)",
+        "Includes an explicit 'Effect Notes' section explaining delivery intent",
+        "Explicitly tags at least one rhetorical appeal (LOGOS/ETHOS/PATHOS)",
+        "States the concrete impact numbers (2 hours -> 20 minutes) clearly",
+        "Addresses the high-stakes/return-offer subtext of the audience without being generic"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "brother-graduation",
+      "prompt": "My little brother is graduating high school in two weeks and he asked me to say a few words at his party. It's casual, at our parents' backyard, maybe 40 people, mix of family and his friends. I have about 5 minutes. I want it to be genuine, not cheesy.",
+      "expected_output": "A ~5 minute graduation/family toast-style speech grounded in shared experience (per graduation playbook: reflect on real shared achievements, not theoretical topics), warm but not cheesy per the user's request, annotated with delivery notes and story tagging.",
+      "files": [],
+      "assertions": [
+        "Uses the skill's bracket annotation convention (at least 4 distinct tags)",
+        "Includes an explicit 'Effect Notes' section explaining delivery intent",
+        "Grounds the speech in a specific/personalizable shared story rather than generic praise",
+        "Explicitly avoids cheesy/cliche framing per the user's request",
+        "Uses a capsule close that calls back to the opener (tagged CALLBACK)"
+      ]
+    }
+  ]
+}
