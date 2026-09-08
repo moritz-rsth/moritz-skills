@@ -1,0 +1,24 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "moritz-skills",
+  "description": "Moritz Rosenthal's personal Claude Code skills: speech writing, HTML slide decks, and more",
+  "owner": { "name": "Moritz Rosenthal" },
+  "plugins": [
+    {
+      "name": "public-speaking-coach",
+      "description": "Drafts speeches, toasts, pitches and talks using an audience-first framework",
+      "author": { "name": "Moritz Rosenthal" },
+      "category": "productivity",
+      "source": "./plugins/public-speaking-coach",
+      "homepage": "https://github.com/moritz-rsth/moritz-skills/tree/main/plugins/public-speaking-coach"
+    },
+    {
+      "name": "frontend-slides",
+      "description": "Animation-rich, zero-dependency HTML presentations from scratch or from PPTX",
+      "author": { "name": "Moritz Rosenthal" },
+      "category": "design",
+      "source": "./plugins/frontend-slides",
+      "homepage": "https://github.com/moritz-rsth/moritz-skills/tree/main/plugins/frontend-slides"
+    }
+  ]
+}

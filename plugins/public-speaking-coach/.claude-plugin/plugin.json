@@ -1,0 +1,10 @@
+{
+  "name": "public-speaking-coach",
+  "description": "Drafts speeches, toasts, pitches and talks using an audience-first framework",
+  "version": "1.0.0",
+  "author": { "name": "Moritz Rosenthal" },
+  "homepage": "https://github.com/moritz-rsth/moritz-skills/tree/main/plugins/public-speaking-coach",
+  "repository": "https://github.com/moritz-rsth/moritz-skills",
+  "license": "MIT",
+  "keywords": ["skills", "speech", "toast", "pitch", "public-speaking"]
+}
