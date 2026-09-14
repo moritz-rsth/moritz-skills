@@ -11,7 +11,6 @@ Add the marketplace once, then install whichever plugins you want:
 ```
 /plugin marketplace add moritz-rsth/moritz-skills
 /plugin install public-speaking-coach@moritz-skills
-/plugin install frontend-slides@moritz-skills
 /plugin install slides@moritz-skills
 ```
 
@@ -22,7 +21,6 @@ Update later with `/plugin marketplace update moritz-skills`.
 | Plugin | What it does | Docs |
 |---|---|---|
 | `public-speaking-coach` | Drafts speeches, toasts, pitches, eulogies, introductions and talks with an audience-first framework. Every draft ships annotated with delivery notes. | [README](plugins/public-speaking-coach/README.md) |
-| `frontend-slides` | Builds animation-rich, zero-dependency HTML slide decks from a topic, notes, or an existing `.pptx`. Includes viewport-safe CSS, style presets, a PDF exporter. | [SKILL.md](plugins/frontend-slides/skills/frontend-slides/SKILL.md) |
 | `slides` | House-style HTML decks: bright Geist design, section pills + page numbers, one self-contained file. Plans the content audience-first (`<name>_plan.md`) before building; ships an asset inliner and a viewport validator. | [SKILL.md](plugins/slides/skills/slides/SKILL.md) |
 
 ## Layout

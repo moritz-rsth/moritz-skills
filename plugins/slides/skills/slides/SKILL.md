@@ -7,6 +7,10 @@ description: Use when the user asks for a deck, presentation, slides or a result
 
 One self-contained HTML deck in the house style: bright, Geist, vertical scroll-snap, a bottom bar with **section pills** that highlight where the viewer is, **page numbers**, and a progress line. `template.html` in this folder *is* the design; copy it and replace the content. The content is planned before any slide exists — see `references/engaging-content.md`.
 
+## Origin
+
+Based on the ECC (Everything Claude Code) `frontend-slides` skill — its viewport-fit base CSS, density limits, `scripts/extract-pptx.py` and `scripts/export-pdf.sh` carry over. The original was removed from this repo; before changing anything structural here, clone it for reference: `git show ab57d27:plugins/frontend-slides/skills/frontend-slides/SKILL.md` in this repo's history (the whole folder lives under that path in commit `ab57d27`).
+
 ## Workflow
 
 1. **Collect the material.** Read the docs, data, run outputs or notes the deck is about. Pull real numbers and real frames — ffmpeg for video frames/clips, contact sheets for "which shot" questions. Never invent a figure.
