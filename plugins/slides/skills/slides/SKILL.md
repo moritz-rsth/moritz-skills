@@ -1,6 +1,6 @@
 ---
 name: slides
-description: Use when the user asks for a deck, presentation, slides or a results review in the house style (bright Geist, section pills, page numbers) or invokes /slides — plans the content audience-first before building. For free-form style exploration use frontend-slides instead.
+description: Use when the user asks for a deck, presentation, slides or a results review in the house style (bright Geist, section pills, page numbers) or invokes /slides — plans the content audience-first before building.
 ---
 
 # Slides
