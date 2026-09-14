@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deck Title</title>
+<!-- Geist from Google Fonts. Offline it falls back to the system sans/mono in --font/--mono. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   VIEWPORT FITTING: MANDATORY. Do not remove.
+   One slide = one viewport. Too much content = split the slide.
+   =========================================== */
+html, body { height: 100%; overflow-x: hidden; }
+/* overflow-x on both html and body makes body the scroller, so snap on both */
+html, body { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+.slide {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-height: 100%;
+  overflow: hidden;
+  padding: var(--slide-padding);
+  padding-bottom: calc(var(--bar-h) + var(--slide-padding) * 0.6); /* keep clear of the bottom bar */
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ===========================================
+   THEME: edit these to restyle the whole deck
+   =========================================== */
+:root {
+  --bg: #fbfbf9;
+  --ink: #0d0d0d;
+  --ink-2: #3a3a3a;
+  --muted: #7a7873;
+  --line: #e4e2dc;
+  --card: #ffffff;
+  --accent: #e0218a;               /* one accent colour, used sparingly */
+  --accent-soft: rgba(224, 33, 138, 0.12);
+  --ok: #1f9d55;
+  --bad: #d64545;
+
+  --font: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --title-size: clamp(1.5rem, 5.2vw, 4.6rem);
+  --h2-size: clamp(1.25rem, 3.2vw, 2.6rem);
+  --h3-size: clamp(0.95rem, 1.6vw, 1.3rem);
+  --body-size: clamp(0.78rem, 1.25vw, 1.08rem);
+  --small-size: clamp(0.66rem, 0.95vw, 0.85rem);
+
+  --slide-padding: clamp(1rem, 4vw, 4rem);
+  --content-gap: clamp(0.6rem, 2.2vh, 2rem);
+  --element-gap: clamp(0.3rem, 1vw, 1rem);
+  --radius: clamp(8px, 1vw, 14px);
+  --bar-h: clamp(44px, 6vh, 60px);
+}
+
+/* Short viewports: shrink type and spacing, then hide optional elements.
+   Mark optional elements with .hide-mid (<=820px tall) or .hide-short (<=500px tall). */
+@media (max-height: 820px) { .hide-mid { display: none !important; } }
+@media (max-height: 700px) {
+  :root {
+    --slide-padding: clamp(0.75rem, 3vw, 2rem);
+    --content-gap: clamp(0.4rem, 1.5vh, 1rem);
+    --title-size: clamp(1.25rem, 4.5vw, 2.6rem);
+    --h2-size: clamp(1rem, 2.6vw, 1.75rem);
+  }
+}
+@media (max-height: 600px) {
+  :root {
+    --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+    --content-gap: clamp(0.3rem, 1vh, 0.75rem);
+    --title-size: clamp(1.1rem, 4vw, 2rem);
+    --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+  }
+  .decorative { display: none; }
+}
+@media (max-height: 500px) {
+  :root {
+    --slide-padding: clamp(0.4rem, 2vw, 1rem);
+    --title-size: clamp(1rem, 3.5vw, 1.5rem);
+    --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+    --body-size: clamp(0.65rem, 1vw, 0.85rem);
+    --small-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  }
+  .hide-short { display: none !important; }
+  .head p { font-size: var(--small-size); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+  html, body { scroll-behavior: auto; }
+}
+
+/* ===========================================
+   BASE TYPOGRAPHY
+   =========================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--body-size);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+h1 { font-size: var(--title-size); font-weight: 600; letter-spacing: -0.035em; line-height: 1.02; }
+h2 { font-size: var(--h2-size); font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
+h3 { font-size: var(--h3-size); font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+p  { color: var(--ink-2); }
+strong { color: var(--ink); font-weight: 600; }
+.mono { font-family: var(--mono); }
+.muted { color: var(--muted); }
+.small { font-size: var(--small-size); }
+.accent { color: var(--accent); }
+
+/* Eyebrow: mono label with a short rule, above every slide heading */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: var(--small-size);
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.6em;
+}
+.eyebrow::before { content: ""; width: 1.6em; height: 1px; background: currentColor; }
+
+/* Head: eyebrow + h2 + one short paragraph. Every content slide starts with one. */
+.head { display: flex; flex-direction: column; gap: clamp(0.3rem, 1vh, 0.7rem); margin-bottom: var(--content-gap); }
+.head p { max-width: 62ch; }
+
+/* Layout helpers */
+.stack { display: flex; flex-direction: column; gap: var(--content-gap); min-height: 0; }
+.row { display: flex; gap: var(--content-gap); min-height: 0; }
+.row > * { min-width: 0; }
+.grow { flex: 1; }
+.center { align-items: center; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(0.7rem, 1.6vw, 1.4rem);
+}
+.tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: var(--small-size);
+  padding: 0.15em 0.6em;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  background: var(--card);
+  white-space: nowrap;
+}
+.tag.dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+.tag.ok { color: var(--ok); border-color: rgba(31,157,85,.35); background: rgba(31,157,85,.07); }
+.tag.bad { color: var(--bad); border-color: rgba(214,69,69,.35); background: rgba(214,69,69,.07); }
+
+/* Bullet list with a short dash instead of a disc */
+ul.clean { list-style: none; display: flex; flex-direction: column; gap: clamp(0.35rem, 1vh, 0.8rem); }
+ul.clean li { padding-left: 1.2em; position: relative; color: var(--ink-2); }
+ul.clean li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 0.45em; height: 1px; background: var(--ink); }
+
+/* Media: images and videos, always inside a <figure> with a mono caption */
+figure { display: flex; flex-direction: column; gap: 0.45rem; min-width: 0; min-height: 0; }
+figcaption { font-size: var(--small-size); color: var(--muted); font-family: var(--mono); }
+.media {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius) * 0.7);
+  background: #111;
+  object-fit: cover;
+}
+img, video { max-width: 100%; }
+.two-up { display: grid; grid-template-columns: 1fr 1fr; gap: var(--content-gap); }
+.two-up .media { max-height: 44vh; object-fit: cover; }
+
+/* Before → after comparison */
+.compare { display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--element-gap); align-items: center; }
+.compare .arrow { font-size: var(--h2-size); color: var(--muted); }
+.compare .media { aspect-ratio: 16/9; max-height: 38vh; }
+
+/* ===========================================
+   BOTTOM BAR: section pills + page number + progress line
+   Pills are generated from each slide's data-section attribute.
+   =========================================== */
+.bar {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  height: var(--bar-h);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0 var(--slide-padding);
+  background: rgba(251, 251, 249, 0.86);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line);
+  z-index: 50;
+}
+.bar-progress {
+  position: absolute; left: 0; top: -1px; height: 2px;
+  background: var(--ink);
+  width: 0;
+  transition: width 0.5s cubic-bezier(.2,.7,.2,1);
+}
+.sections { display: flex; align-items: center; gap: clamp(0.1rem, 0.5vw, 0.4rem); list-style: none; min-width: 0; overflow: hidden; }
+.sections button {
+  font: inherit;
+  font-size: var(--small-size);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--muted);
+  padding: 0.35em 0.9em;
+  border-radius: 99px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .35s ease, color .35s ease, border-color .35s ease;
+  display: flex; gap: 0.5em; align-items: baseline;
+}
+.sections button .n { font-family: var(--mono); font-size: 0.9em; }
+.sections button:hover { color: var(--ink); }
+.sections button.done { color: var(--ink-2); }
+.sections button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.sections button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pageno { font-family: var(--mono); font-size: var(--small-size); color: var(--muted); white-space: nowrap; }
+.pageno b { color: var(--ink); font-weight: 500; }
+@media (max-width: 900px) { .sections button:not(.active) .label { display: none; } }
+
+/* ===========================================
+   REVEAL ANIMATION: add .reveal to direct children of the slide
+   =========================================== */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+.slide.visible .reveal { opacity: 1; transform: none; }
+.slide.visible .reveal:nth-child(2) { transition-delay: .08s; }
+.slide.visible .reveal:nth-child(3) { transition-delay: .16s; }
+.slide.visible .reveal:nth-child(4) { transition-delay: .24s; }
+.slide.visible .reveal:nth-child(5) { transition-delay: .32s; }
+.slide.visible .reveal:nth-child(6) { transition-delay: .40s; }
+
+/* ===========================================
+   COMPONENTS. Delete the ones the deck does not use.
+   =========================================== */
+
+/* Title slide: eyebrow + byline on top, big title in the middle, footer row */
+.title-slide .slide-content { justify-content: space-between; }
+.title-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.byline { display: flex; flex-direction: column; align-items: flex-end; gap: 0.15em; font-size: var(--small-size); font-family: var(--mono); color: var(--muted); text-align: right; }
+.byline b { color: var(--ink); font-weight: 500; }
+.title-main { display: flex; flex-direction: column; gap: clamp(0.8rem, 2.5vh, 1.8rem); }
+.title-main h1 { font-size: clamp(2rem, 8.5vw, 7.5rem); }
+.title-main p { font-size: clamp(0.95rem, 1.8vw, 1.5rem); max-width: 32ch; color: var(--ink-2); }
+
+/* Spec cards: key / big value / note */
+.specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--element-gap); }
+.spec .k { font-family: var(--mono); font-size: var(--small-size); color: var(--muted); }
+.spec .v { font-size: clamp(1rem, 2vw, 1.7rem); font-weight: 600; letter-spacing: -0.02em; margin: 0.2em 0; }
+
+/* Question box: for the one decision the audience has to make */
+.question {
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: clamp(1rem, 2.4vw, 2.2rem);
+  display: flex; flex-direction: column; gap: var(--content-gap);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.question .q-label { display: flex; align-items: center; gap: 0.6rem; font-family: var(--mono); font-size: var(--small-size); text-transform: uppercase; letter-spacing: .05em; }
+.question .q-mark { width: 1.8em; height: 1.8em; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 700; font-family: var(--font); }
+.question h2 { max-width: 26ch; }
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: var(--element-gap); }
+.option { border: 1px solid var(--line); border-radius: calc(var(--radius) * 0.8); padding: clamp(0.7rem, 1.4vw, 1.2rem); display: flex; flex-direction: column; gap: 0.4rem; background: var(--bg); }
+.option .letter { font-family: var(--mono); font-size: var(--small-size); color: var(--muted); }
+
+/* Idea cards with +/− lines */
+.ideas { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--element-gap); }
+.idea { display: flex; flex-direction: column; gap: 0.55rem; }
+.idea .pc { display: flex; flex-direction: column; gap: 0.3rem; font-size: var(--small-size); }
+.idea .pc div { display: grid; grid-template-columns: 1.1em 1fr; color: var(--ink-2); line-height: 1.35; }
+.idea .pc .p::before { content: "+"; color: var(--ok); font-weight: 700; font-family: var(--mono); }
+.idea .pc .c::before { content: "−"; color: var(--bad); font-weight: 700; font-family: var(--mono); }
+.idea.highlight { border-color: var(--ink); }
+
+/* Data table with an inline bar (.meter) and one picked row */
+table.data { width: 100%; border-collapse: collapse; font-size: var(--small-size); }
+table.data th { text-align: left; font-weight: 500; color: var(--muted); font-family: var(--mono); padding: 0.45em 0.6em; border-bottom: 1px solid var(--ink); }
+table.data td { padding: 0.5em 0.6em; border-bottom: 1px solid var(--line); font-family: var(--mono); color: var(--ink-2); }
+table.data td:first-child { font-family: var(--font); color: var(--ink); }
+table.data tr.pick td { background: var(--ink); color: #fff; }
+.meter { display: inline-block; height: 0.5em; background: var(--ink); border-radius: 2px; vertical-align: middle; margin-right: 0.5em; }
+tr.pick .meter { background: #fff; }
+
+/* Stepper: numbered dots on a line. .ai marks steps that call a model (filled dot). */
+.steps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; position: relative; }
+.step { display: flex; flex-direction: column; gap: 0.5rem; padding-right: clamp(0.4rem, 1.2vw, 1.2rem); position: relative; }
+.step .dot { width: clamp(30px, 3.4vw, 46px); height: clamp(30px, 3.4vw, 46px); border-radius: 50%; border: 1.5px solid var(--ink); display: grid; place-items: center; font-family: var(--mono); font-size: var(--small-size); background: var(--bg); position: relative; z-index: 1; }
+.step:not(:last-child)::after { content: ""; position: absolute; top: calc(clamp(30px, 3.4vw, 46px) / 2); left: clamp(30px, 3.4vw, 46px); right: 0; height: 1.5px; background: var(--ink); }
+.step.ai .dot { background: var(--ink); color: #fff; }
+.step p { font-size: var(--small-size); }
+.step .tool { font-family: var(--mono); font-size: var(--small-size); color: var(--muted); }
+.legend { display: flex; gap: 1.2rem; font-size: var(--small-size); color: var(--muted); align-items: center; flex-wrap: wrap; }
+.legend i { display: inline-block; width: 0.8em; height: 0.8em; border-radius: 50%; border: 1.5px solid var(--ink); margin-right: 0.4em; vertical-align: -0.1em; }
+.legend i.f { background: var(--ink); }
+
+/* Horizontal bars: name | track | number */
+.bars { display: flex; flex-direction: column; gap: clamp(0.8rem, 2.4vh, 1.6rem); }
+.barrow { display: grid; grid-template-columns: minmax(8rem, 13rem) 1fr minmax(6rem, 9rem); gap: 1rem; align-items: center; }
+.barrow .name { font-weight: 500; }
+.barrow .name small { display: block; color: var(--muted); font-weight: 400; font-size: var(--small-size); }
+.track { display: flex; height: clamp(18px, 3.2vh, 30px); border-radius: 4px; overflow: hidden; background: var(--line); }
+.track .kept { background: var(--ink); }
+.track .dropped { background: repeating-linear-gradient(-45deg, #d9d6cf 0 4px, #ecebe6 4px 8px); }
+.barrow .num { font-family: var(--mono); font-size: var(--small-size); color: var(--ink-2); text-align: right; }
+
+/* Timeline: segments positioned with left/width in percent */
+.timeline { position: relative; height: clamp(46px, 8vh, 72px); border-bottom: 1.5px solid var(--ink); margin-top: 1.4rem; }
+.timeline .seg { position: absolute; bottom: 0; height: 62%; background: var(--ink); border-radius: 3px 3px 0 0; min-width: 4px; }
+.timeline .seg.hi { background: var(--accent); }
+.ticks { display: flex; justify-content: space-between; font-family: var(--mono); font-size: var(--small-size); color: var(--muted); margin-top: 0.35rem; }
+
+/* Big-number stats */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--element-gap); }
+.stat .v { font-size: clamp(1.2rem, 2.6vw, 2.2rem); font-weight: 600; letter-spacing: -0.03em; }
+.stat .k { font-size: var(--small-size); color: var(--muted); }
+
+/* Numbered to-do cards for the closing slide */
+.todo { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--element-gap); }
+.todo .card { display: grid; grid-template-columns: auto 1fr; gap: 0.2rem 0.9rem; align-items: start; }
+.todo .n { font-family: var(--mono); font-size: var(--small-size); color: var(--muted); grid-row: span 2; padding-top: 0.2em; }
+
+/* ===========================================
+   RESPONSIVE: narrow screens stack or drop the secondary element
+   =========================================== */
+@media (max-width: 900px) {
+  .steps { grid-template-columns: repeat(3, 1fr); row-gap: 1rem; }
+  .step:nth-child(3)::after { display: none; }
+  .ideas { grid-template-columns: 1fr; }
+  .idea .pc { display: none; }
+  .row.wrap-sm { flex-direction: column; }
+  .barrow { grid-template-columns: 7rem 1fr 5.5rem; }
+  .hide-sm { display: none !important; }
+}
+@media (max-width: 600px) {
+  .specs, .options, .todo, .stats, .two-up { grid-template-columns: 1fr; }
+  .two-up figure:last-child { display: none; }
+  .compare { grid-template-columns: 1fr; }
+  .compare .arrow, .compare figure:first-child { display: none; }
+  .hide-xs { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<main id="deck">
+
+<!-- Every slide: <section class="slide" data-section="Pill label">. Consecutive slides
+     with the same data-section form one pill in the bottom bar. -->
+
+<!-- ===================== TITLE ===================== -->
+<section class="slide title-slide" data-section="Intro" aria-label="Title">
+  <div class="slide-content">
+    <div class="title-top reveal">
+      <span class="eyebrow">Context line</span>
+      <span class="byline"><b>Moritz Rosenthal</b><span>14 September 2026</span></span>
+    </div>
+    <div class="title-main">
+      <h1 class="reveal">Deck<br>Title</h1>
+      <p class="reveal">One sentence on what this deck is about.</p>
+    </div>
+    <div class="row center reveal" style="justify-content: space-between; flex-wrap: wrap;">
+      <span class="mono small muted">optional footer left</span>
+      <span class="mono small muted">optional footer right</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTENT: cards + two columns ===================== -->
+<section class="slide" data-section="Intro" aria-label="The task">
+  <div class="slide-content">
+    <div class="head">
+      <span class="eyebrow reveal">The task</span>
+      <h2 class="reveal">Action title: the one thing this slide says.</h2>
+      <p class="reveal">Two lines of context at most. Everything else goes into the cards or the list.</p>
+    </div>
+    <div class="specs reveal">
+      <div class="card spec"><div class="k">key</div><div class="v">Value</div><div class="small muted">note</div></div>
+      <div class="card spec"><div class="k">key</div><div class="v">Value</div><div class="small muted">note</div></div>
+      <div class="card spec"><div class="k">key</div><div class="v">Value</div><div class="small muted">note</div></div>
+    </div>
+    <div class="row wrap-sm reveal" style="margin-top: var(--content-gap); align-items: flex-start;">
+      <div class="grow">
+        <h3 style="margin-bottom:.5rem">Column one</h3>
+        <ul class="clean small"><li>Point</li><li>Point</li><li>Point</li></ul>
+      </div>
+      <div class="grow">
+        <h3 style="margin-bottom:.5rem">Column two</h3>
+        <span class="tag">tag</span> <span class="tag">tag</span> <span class="tag dark">tag</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MEDIA: two images side by side ===================== -->
+<section class="slide" data-section="Problem" aria-label="Two-up media">
+  <div class="slide-content">
+    <div class="head">
+      <span class="eyebrow reveal">Evidence</span>
+      <h2 class="reveal">Two images, one verdict each.</h2>
+    </div>
+    <div class="two-up reveal">
+      <figure>
+        <img class="media" src="{{left.jpg}}" alt="">
+        <div><span class="tag ok">✓ verdict</span></div>
+      </figure>
+      <figure>
+        <img class="media" src="{{right.jpg}}" alt="">
+        <div><span class="tag bad">✗ verdict</span></div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== QUESTION BOX ===================== -->
+<section class="slide" data-section="Options" aria-label="Open question">
+  <div class="slide-content">
+    <div class="question reveal">
+      <div class="q-label"><span class="q-mark">?</span> Open question</div>
+      <h2>The decision the audience has to make?</h2>
+      <div class="options">
+        <div class="option"><span class="letter">A</span><h3>Option A</h3><p class="small">What it means.</p></div>
+        <div class="option"><span class="letter">B</span><h3>Option B</h3><p class="small">What it means.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== IDEAS: pro / con cards ===================== -->
+<section class="slide" data-section="Options" aria-label="Trade-offs">
+  <div class="slide-content">
+    <div class="head">
+      <span class="eyebrow reveal">Brainstorm</span>
+      <h2 class="reveal">Trade-offs, plus a middle ground.</h2>
+    </div>
+    <div class="ideas reveal">
+      <div class="card idea"><span class="tag" style="align-self:flex-start">A</span><h3>Name</h3>
+        <div class="pc"><div class="p">Upside</div><div class="c">Downside</div></div></div>
+      <div class="card idea"><span class="tag" style="align-self:flex-start">B</span><h3>Name</h3>
+        <div class="pc"><div class="p">Upside</div><div class="c">Downside</div></div></div>
+      <div class="card idea highlight"><span class="tag dark" style="align-self:flex-start">C</span><h3>Recommended</h3>
+        <div class="pc"><div class="p">Upside</div><div class="c">Downside</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TABLE ===================== -->
+<section class="slide" data-section="Method" aria-label="Comparison table">
+  <div class="slide-content">
+    <div class="row wrap-sm center">
+      <div class="stack grow" style="flex: 0.9;">
+        <div class="head" style="margin:0">
+          <span class="eyebrow reveal">Step 01</span>
+          <h2 class="reveal">Text left, table right.</h2>
+          <p class="reveal">Why the highlighted row was picked.</p>
+        </div>
+      </div>
+      <div class="grow reveal">
+        <table class="data">
+          <thead><tr><th>option</th><th>count</th><th>time</th></tr></thead>
+          <tbody>
+            <tr><td>Option one</td><td><span class="meter" style="width:3em"></span>61</td><td>10.1 s</td></tr>
+            <tr class="pick"><td>Option two</td><td><span class="meter" style="width:3em"></span>61</td><td>11.7 s</td></tr>
+            <tr><td>Option three</td><td><span class="meter" style="width:2.4em"></span>49</td><td>11.9 s</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STEPPER ===================== -->
+<section class="slide" data-section="Method" aria-label="Pipeline overview">
+  <div class="slide-content">
+    <div class="head">
+      <span class="eyebrow reveal">Pipeline</span>
+      <h2 class="reveal">Six steps from input to output.</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step"><div class="dot">01</div><h3>Step</h3><span class="tool">tool</span><p class="hide-short">What it does</p></div>
+      <div class="step"><div class="dot">02</div><h3>Step</h3><span class="tool">tool</span><p class="hide-short">What it does</p></div>
+      <div class="step ai"><div class="dot">03</div><h3>Step</h3><span class="tool">model</span><p class="hide-short">What it does</p></div>
+      <div class="step"><div class="dot">04</div><h3>Step</h3><span class="tool">tool</span><p class="hide-short">What it does</p></div>
+      <div class="step"><div class="dot">05</div><h3>Step</h3><span class="tool">tool</span><p class="hide-short">What it does</p></div>
+      <div class="step ai"><div class="dot">06</div><h3>Step</h3><span class="tool">model</span><p class="hide-short">What it does</p></div>
+    </div>
+    <div class="legend reveal" style="margin-top: var(--content-gap)"><span><i></i>local</span><span><i class="f"></i>model call</span></div>
+  </div>
+</section>
+
+<!-- ===================== BARS + STATS ===================== -->
+<section class="slide" data-section="Method" aria-label="Bars and stats">
+  <div class="slide-content">
+    <div class="head">
+      <span class="eyebrow reveal">Step 02</span>
+      <h2 class="reveal">Numbers as bars, then as big figures.</h2>
+    </div>
+    <div class="bars reveal">
+      <div class="barrow"><div class="name">Row A<small>note</small></div><div class="track"><div class="kept" style="width:26%"></div><div class="dropped" style="width:74%"></div></div><div class="num">37 of 142</div></div>
+      <div class="barrow"><div class="name">Row B<small>note</small></div><div class="track"><div class="kept" style="width:48%"></div><div class="dropped" style="width:52%"></div></div><div class="num">46 of 95</div></div>
+    </div>
+    <div class="stats reveal" style="margin-top: var(--content-gap)">
+      <div class="stat"><div class="v">3 / 12</div><div class="k">what the number is</div></div>
+      <div class="stat"><div class="v">9</div><div class="k">what the number is</div></div>
+      <div class="stat hide-xs"><div class="v">1–2 min</div><div class="k">what the number is</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BEFORE → AFTER ===================== -->
+<section class="slide" data-section="Method" aria-label="Before and after">
+  <div class="slide-content">
+    <div class="head">
+      <span class="eyebrow reveal">Step 03</span>
+      <h2 class="reveal">Input on the left, output on the right.</h2>
+    </div>
+    <div class="compare reveal">
+      <figure>
+        <video class="media lazy-video" muted loop playsinline preload="none" poster="{{before.jpg}}" data-src="{{before.mp4}}"></video>
+        <figcaption>before</figcaption>
+      </figure>
+      <div class="arrow" aria-hidden="true">→</div>
+      <figure>
+        <video class="media lazy-video" muted loop playsinline preload="none" poster="{{after.jpg}}" data-src="{{after.mp4}}"></video>
+        <figcaption>after</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLOSING ===================== -->
+<section class="slide" data-section="Next steps" aria-label="Next steps">
+  <div class="slide-content">
+    <div class="head">
+      <span class="eyebrow reveal">Where we are</span>
+      <h2 class="reveal">What we need to decide next.</h2>
+    </div>
+    <div class="todo reveal">
+      <div class="card"><span class="n">01</span><h3>Decision</h3><p class="small">Why it matters.</p></div>
+      <div class="card"><span class="n">02</span><h3>Decision</h3><p class="small">Why it matters.</p></div>
+      <div class="card"><span class="n">03</span><h3>Decision</h3><p class="small">Why it matters.</p></div>
+      <div class="card"><span class="n">04</span><h3>Decision</h3><p class="small">Why it matters.</p></div>
+    </div>
+    <p class="reveal" style="margin-top: calc(var(--content-gap) * 1.4); font-size: var(--h3-size); color: var(--ink)">Thanks. Questions?</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Presentation progress">
+  <div class="bar-progress" id="barProgress"></div>
+  <ul class="sections" id="sections"></ul>
+  <div class="pageno" aria-live="polite"><b id="pageCur">01</b> / <span id="pageTot">00</span></div>
+</nav>
+
+<script>
+/* ===========================================
+   PRESENTATION CONTROLLER
+   Vertical scroll-snap deck: keyboard, wheel (native), touch (native),
+   section pills + page number + progress line, reveal-on-enter, lazy video.
+   No changes needed per deck: everything is read from the DOM.
+   =========================================== */
+class Presentation {
+  constructor() {
+    this.slides = [...document.querySelectorAll('.slide')];
+    this.current = 0;
+    this.pad = n => String(n).padStart(2, '0');
+    this.buildSections();
+    this.observe();
+    this.bindKeys();
+    document.getElementById('pageTot').textContent = this.pad(this.slides.length);
+    this.update(0);
+  }
+
+  // One pill per distinct data-section, in order of first appearance.
+  buildSections() {
+    this.sections = [];
+    this.slides.forEach((s, i) => {
+      const name = s.dataset.section;
+      let sec = this.sections.find(x => x.name === name);
+      if (!sec) { sec = { name, first: i, last: i }; this.sections.push(sec); }
+      sec.last = i;
+    });
+    const ul = document.getElementById('sections');
+    this.sections.forEach((sec, i) => {
+      const li = document.createElement('li');
+      const b = document.createElement('button');
+      b.innerHTML = `<span class="n">${this.pad(i + 1)}</span><span class="label">${sec.name}</span>`;
+      b.setAttribute('aria-label', `Go to section ${i + 1}: ${sec.name}`);
+      b.addEventListener('click', () => this.go(sec.first));
+      li.appendChild(b);
+      ul.appendChild(li);
+      sec.el = b;
+    });
+  }
+
+  observe() {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.intersectionRatio >= 0.55) {
+          e.target.classList.add('visible');
+          this.update(this.slides.indexOf(e.target));
+        }
+      });
+    }, { threshold: [0.55] });
+    this.slides.forEach(s => io.observe(s));
+  }
+
+  update(i) {
+    if (i < 0) return;
+    this.current = i;
+    document.getElementById('pageCur').textContent = this.pad(i + 1);
+    document.getElementById('barProgress').style.width = `${((i + 1) / this.slides.length) * 100}%`;
+    this.sections.forEach(sec => {
+      const active = i >= sec.first && i <= sec.last;
+      sec.el.classList.toggle('active', active);
+      sec.el.classList.toggle('done', i > sec.last);
+      if (active) sec.el.setAttribute('aria-current', 'step'); else sec.el.removeAttribute('aria-current');
+    });
+    this.syncVideos(i);
+  }
+
+  // Videos only load and play on the slide in view.
+  syncVideos(i) {
+    this.slides.forEach((s, j) => {
+      s.querySelectorAll('video.lazy-video').forEach(v => {
+        if (j === i) {
+          if (!v.src && v.dataset.src) { v.src = v.dataset.src; }
+          const p = v.play(); if (p && p.catch) p.catch(() => {});
+        } else if (!v.paused) {
+          v.pause();
+        }
+      });
+    });
+  }
+
+  go(i) {
+    i = Math.max(0, Math.min(this.slides.length - 1, i));
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.slides[i].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  bindKeys() {
+    document.addEventListener('keydown', e => {
+      if (e.target.closest && e.target.closest('button') && (e.key === ' ' || e.key === 'Enter')) return;
+      const next = ['ArrowDown', 'PageDown', ' ', 'ArrowRight'];
+      const prev = ['ArrowUp', 'PageUp', 'ArrowLeft'];
+      if (next.includes(e.key)) { e.preventDefault(); this.go(this.current + 1); }
+      else if (prev.includes(e.key)) { e.preventDefault(); this.go(this.current - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); this.go(0); }
+      else if (e.key === 'End') { e.preventDefault(); this.go(this.slides.length - 1); }
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => new Presentation());
+</script>
+</body>
+</html>

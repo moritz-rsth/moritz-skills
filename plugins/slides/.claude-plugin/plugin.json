@@ -1,0 +1,10 @@
+{
+  "name": "slides",
+  "description": "Self-contained HTML decks in the house style: bright Geist design, section pills, page numbers, content planned audience-first",
+  "version": "0.1.0",
+  "author": { "name": "Moritz Rosenthal" },
+  "homepage": "https://github.com/moritz-rsth/moritz-skills/tree/main/plugins/slides",
+  "repository": "https://github.com/moritz-rsth/moritz-skills",
+  "license": "MIT",
+  "keywords": ["skills", "slides", "presentation", "html", "deck"]
+}
