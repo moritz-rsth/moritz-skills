@@ -54,7 +54,7 @@ A slide that fits none of these is cut or merged.
 
 - The audience should watch the speaker at least half the time. A slide the room reads is a slide the speaker competes with. A 1–3-word heading + one visual; the reasoning is spoken.
 - No subheading by default. Every extra line under the heading is read instead of listened to; it earns its place only when the slide is unreadable without it, and the user agrees to it in the interview.
-- The user checks off every heading before the build (round 4). Headings written alone drift into sentences; headings someone else has to approve stay short.
+- The user checks off every heading in a chat overview before the plan is written (round 3). Headings written alone drift into sentences; headings someone else has to approve stay short.
 - Tell them where to look: the accent colour marks the one element being discussed.
 - A slide's job done → next slide. No stale content while the talk moves on; split rather than stack.
 - Don't read the slide aloud; if the speaker notes would repeat the slide, the slide has too much text.

@@ -1,6 +1,6 @@
 # <Deck title> — plan
 
-_Written after the interview, before any slide. It records what the user decided — nothing here should be new to them. One-liners only; if a line needs a paragraph the thinking isn't done. Path: `<topic-dir>/presentation/<name>_plan.md`._
+_Written only after the user said yes to the heading overview in chat, before any slide. It records what the user decided — nothing here should be new to them; self-review it, don't ask them to review it. One-liners only; if a line needs a paragraph the thinking isn't done. Path: `<topic-dir>/presentation/<name>_plan.md`._
 
 ## Audience (round 1)
 
@@ -24,7 +24,7 @@ _Written after the interview, before any slide. It records what the user decided
 
 <Type (curiosity / problem / room reference / grabber) + the artefact. Which main point it sets up.>
 
-## Sections → slides (rounds 3 and 4)
+## Sections → slides (round 3 + your details)
 
 Section = one pill. Per slide: **heading** (1–3 words, as agreed) · says: <the spoken sentence> · purpose (hook / state / demonstrate / restate / objection / ask / close) · device (component) · source.
 
@@ -45,7 +45,7 @@ Section = one pill. Per slide: **heading** (1–3 words, as agreed) · says: <th
 ### Backup (not in the talk)
 - **<Heading>** · Q&A reserve · <device>
 
-## Text exceptions (agreed in round 4)
+## Text exceptions (agreed in round 3)
 
 <Every heading over 3 words and every subheading, with the reason the user accepted. Empty is the normal case.>
 
