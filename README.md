@@ -21,7 +21,7 @@ Update later with `/plugin marketplace update moritz-skills`.
 | Plugin | What it does | Docs |
 |---|---|---|
 | `public-speaking-coach` | Drafts speeches, toasts, pitches, eulogies, introductions and talks with an audience-first framework. Every draft ships annotated with delivery notes. | [README](plugins/public-speaking-coach/README.md) |
-| `slides` | House-style HTML decks: bright Geist design, section pills + page numbers, one self-contained file. Plans the content audience-first (`<name>_plan.md`) before building; ships an asset inliner and a viewport validator. | [SKILL.md](plugins/slides/skills/slides/SKILL.md) |
+| `slides` | House-style HTML decks: bright Geist design, section pills + page numbers, one self-contained file. Interviews you first (audience, main points + hook, structure, 1–3-word headings) behind a hard gate, then writes `<name>_plan.md` and builds; ships an asset inliner and a viewport validator. | [SKILL.md](plugins/slides/skills/slides/SKILL.md) |
 
 ## Layout
 

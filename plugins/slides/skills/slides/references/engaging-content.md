@@ -15,13 +15,13 @@ Map the audience before writing a heading. Each answer changes the deck:
 | What must they think, feel or **decide** afterward? | The **intention** — one sentence. The deck's north star; anything not serving it gets cut |
 | Time slot, room, who speaks before/after | Slide count (≈ 1–1.5 min per slide), whether a question box can actually be discussed live |
 
-Write the map into the plan file (`plan-template.md`) before the outline. If the user hasn't given it, ask — don't guess at facts that change the deck.
+This map is round 1 of the interview in `SKILL.md` — always asked, with your recommended answers from the material, never guessed. It goes into the plan file only after the user has answered.
 
 ## 2. One intention, 1–3 main points
 
 - The intention is what the audience does differently afterward ("decides between A and B", "approves the next batch", "understands why X failed").
 - At most three main points, each sayable as one short sentence. Every section serves one of them. Can't state a point in one sentence → the thinking isn't done; go back to the intention.
-- A slide's action title *is* that sentence for the slide. If a title only names a topic ("Cut detection"), rewrite it as a claim ("Hard cuts are all caught; dissolves are not").
+- Each slide still has a claim, but the claim is **spoken**, not shown. The plan holds it as the slide's spoken line ("Hard cuts are all caught; dissolves are not"); the canvas shows the 1–3-word heading that points at it ("Dissolves missed"). A heading that names only a topic with no point ("Cut detection") is still too vague — compress the claim, don't drop it.
 
 ## 3. Open with a hook, not an agenda
 
@@ -41,7 +41,7 @@ For each slide, the plan names its **purpose** and its **device**. Purposes:
 | Purpose | Slide shape | Rule |
 |---|---|---|
 | **Hook** | image / question / one number | ≤ 10 words of text |
-| **State** a main point | action title + one visual | the title is the claim |
+| **State** a main point | 1–3-word heading + one visual | the heading compresses the claim; the speaker says it in full |
 | **Demonstrate** it | evidence: table, bars, before/after, contact sheet | real data, source in the figcaption; logos (numbers), ethos (what was measured), pathos (the frame the viewer sees) |
 | **Restate / bridge** | one line, or a stat trio | slightly different words than the first statement |
 | **Objection** | card naming the doubt, then the answer | say it before they do |
@@ -52,7 +52,9 @@ A slide that fits none of these is cut or merged.
 
 ## 5. Less text, more room for the speaker
 
-- The audience should watch the speaker at least half the time. A slide the room reads is a slide the speaker competes with. Titles + a visual + a caption; the reasoning is spoken.
+- The audience should watch the speaker at least half the time. A slide the room reads is a slide the speaker competes with. A 1–3-word heading + one visual; the reasoning is spoken.
+- No subheading by default. Every extra line under the heading is read instead of listened to; it earns its place only when the slide is unreadable without it, and the user agrees to it in the interview.
+- The user checks off every heading before the build (round 4). Headings written alone drift into sentences; headings someone else has to approve stay short.
 - Tell them where to look: the accent colour marks the one element being discussed.
 - A slide's job done → next slide. No stale content while the talk moves on; split rather than stack.
 - Don't read the slide aloud; if the speaker notes would repeat the slide, the slide has too much text.
